@@ -1,4 +1,4 @@
-// Popup script for Auto Debate Buddy
+// Popup script for ArgueWise
 document.addEventListener('DOMContentLoaded', async () => {
     await loadSettings();
     await loadStats();

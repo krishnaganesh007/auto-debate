@@ -1,4 +1,4 @@
-// Background script for Auto Debate Buddy
+// Background script for ArgueWise
 chrome.runtime.onInstalled.addListener(() => {
     // Create context menu item
     chrome.contextMenus.create({
@@ -7,12 +7,15 @@ chrome.runtime.onInstalled.addListener(() => {
       contexts: ["selection"]
     });
   
-    console.log("Auto Debate Buddy installed successfully!");
+    console.log("ArgueWise installed successfully!");
   });
   
   // Handle context menu clicks
   chrome.contextMenus.onClicked.addListener((info, tab) => {
+    console.log("Context menu clicked:", info);
+    
     if (info.menuItemId === "debateWithAI" && info.selectionText) {
+      console.log("Sending message to content script with text:", info.selectionText);
       // Send selected text to content script
       chrome.tabs.sendMessage(tab.id, {
         action: "startDebate",
@@ -26,7 +29,7 @@ chrome.runtime.onInstalled.addListener(() => {
     if (request.action === "generateDebate") {
       generateDebateArguments(request.text, request.settings)
         .then(response => sendResponse(response))
-        .catch(error => sendResponse({ error: error.message }));
+        .catch(error => sendResponse({ success: false, error: error.message }));
       return true; // Keep message channel open for async response
     }
   });
@@ -55,36 +58,18 @@ chrome.runtime.onInstalled.addListener(() => {
             parts: [{
               text: prompt
             }]
-          }],
-          generationConfig: {
-            temperature: 0.7,
-            topK: 40,
-            topP: 0.95,
-            maxOutputTokens: 1024,
-          }
+          }]
         })
       });
   
       if (!response.ok) {
-        throw new Error(`API request failed: ${response.status}`);
+        throw new Error(`Gemini API error: ${response.status} ${response.statusText}`);
       }
   
-      // For debugging: log raw text response
-      const rawText = await response.text();
-      console.log("Gemini API raw response:", rawText);
-      const data = JSON.parse(rawText);
+      const data = await response.json();
   
-      if (
-        !data ||
-        !data.candidates ||
-        !Array.isArray(data.candidates) ||
-        data.candidates.length === 0 ||
-        !data.candidates[0].content ||
-        !data.candidates[0].content.parts ||
-        !Array.isArray(data.candidates[0].content.parts) ||
-        data.candidates[0].content.parts.length === 0
-      ) {
-        throw new Error("API response does not contain generated content.");
+      if (!data.candidates || !data.candidates[0] || !data.candidates[0].content) {
+        throw new Error('Invalid response from Gemini API');
       }
   
       const generatedText = data.candidates[0].content.parts[0].text;

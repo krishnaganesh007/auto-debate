@@ -1,33 +1,30 @@
 {
-    "manifest_version": 3,
-    "name": "Auto Debate Buddy",
-    "version": "1.0",
-    "description": "Instantly generate balanced debates for any highlighted text with AI-powered pro and con arguments",
-    "permissions": [
-      "activeTab",
-      "contextMenus",
-      "storage"
-    ],
-    "host_permissions": [
-      "*://*/*"
-    ],
-    "background": {
-      "service_worker": "background.js"
-    },
-    "content_scripts": [
-      {
-        "matches": ["*://*/*"],
-        "js": ["content.js"],
-        "css": ["content.css"]
-      }
-    ],
-    "action": {
-      "default_popup": "popup.html",
-      "default_title": "Auto Debate Buddy"
-    },
-    "icons": {
-      "16": "icons/icon16.png",
-      "48": "icons/icon48.png",
-      "128": "icons/icon128.png"
+  "manifest_version": 3,
+  "name": "ArgueWise",
+  "version": "1.0",
+  "description": "Instantly generate balanced arguments for any claim. See both sides with AI-powered debate analysis.",
+  "permissions": [
+    "contextMenus",
+    "storage",
+    "activeTab"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["content.css"]
     }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "ArgueWise Settings"
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
   }
+}
