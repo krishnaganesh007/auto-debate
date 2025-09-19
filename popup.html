@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Auto Debate Buddy Settings</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container">
+    <div class="header">
+      <h2>🗣️ Auto Debate Buddy</h2>
+      <p class="subtitle">Generate balanced debates for any text</p>
+    </div>
+    
+    <div class="content">
+      <div class="section">
+        <h3>🔑 API Configuration</h3>
+        <div class="input-group">
+          <label for="api-key">Gemini API Key:</label>
+          <input type="password" id="api-key" placeholder="Enter your Gemini API key">
+          <button id="toggle-visibility" class="toggle-btn">👁️</button>
+        </div>
+        <p class="help-text">
+          Get your free API key from 
+          <a href="https://makersuite.google.com/app/apikey" target="_blank">Google AI Studio</a>
+        </p>
+      </div>
+      
+      <div class="section">
+        <h3>📊 Usage Stats</h3>
+        <div class="stats-grid">
+          <div class="stat-item">
+            <div class="stat-number" id="total-debates">0</div>
+            <div class="stat-label">Total Debates</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" id="today-debates">0</div>
+            <div class="stat-label">Today</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="section">
+        <h3>🎯 How to Use</h3>
+        <ol class="instructions">
+          <li>Set your Gemini API key above</li>
+          <li>Highlight any text on any webpage</li>
+          <li>Right-click and select "🗣️ Debate with AI"</li>
+          <li>Choose your debate settings and generate!</li>
+        </ol>
+      </div>
+      
+      <div class="section">
+        <h3>⚙️ Quick Settings</h3>
+        <div class="settings-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="auto-copy" checked>
+            <span class="checkmark"></span>
+            Auto-copy results to clipboard
+          </label>
+          
+          <label class="checkbox-label">
+            <input type="checkbox" id="show-notifications" checked>
+            <span class="checkmark"></span>
+            Show completion notifications
+          </label>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer">
+      <button id="save-settings" class="save-btn">💾 Save Settings</button>
+      <div class="footer-links">
+        <a href="#" id="clear-data">Clear Data</a>
+        <span>•</span>
+        <a href="https://github.com" target="_blank">GitHub</a>
+      </div>
+    </div>
+    
+    <div id="notification" class="notification"></div>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>
